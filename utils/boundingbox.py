@@ -4,9 +4,6 @@ import numbers
 
 
 class Box:
-
-    """Rectangular bounding box"""
-
     def __init__(self, left: float, top: float,
                  right: float, bottom: float) -> None:
         if top > bottom or left > right:
@@ -26,12 +23,10 @@ class Box:
         return '{}({})'.format(cname, ', '.join(kwargs))
 
     def __eq__(self, other: typing.Any) -> bool:
-        """Equality check"""
         return (self.__class__ == other.__class__ and
                 self.__dict__ == other.__dict__)
 
     def __add__(self, other: typing.Any) -> 'Box':
-        """Returns a Box containing both input boxes"""
         try:
             return Box(
                 left=min(self.left, other.left),
@@ -48,7 +43,6 @@ class Box:
         return self + other
 
     def __and__(self, other: typing.Any) -> 'Box':
-        """Intersection"""
         try:
             return Box(
                 left=max(self.left, other.left),
@@ -63,7 +57,6 @@ class Box:
             return NotImplemented
 
     def __mul__(self, factor: float) -> 'Box':
-        """Multiply all dimensions by factor"""
         if not isinstance(factor, numbers.Real):
             return NotImplemented
         x, y = self.center
@@ -95,29 +88,25 @@ class Box:
 
     @property
     def diagonal(self) -> float:
-        """Length of diagonal"""
         return (self.width**2 + self.height**2)**0.5
 
     @property
     def ratio(self) -> float:
-        """Aspect ratio"""
         return self.width / self.height
 
     @property
     def size(self) -> float:
-        """Area of Box"""
         return self.width * self.height
 
     @property
     def center(self) -> typing.Tuple[float, float]:
-        """Center point of box (x, y)"""
         return (
             (self.left + self.right) / 2,
             (self.top + self.bottom) / 2
         )
 
 
-def test_box_properties():
+def test_boxproperties():
     width, height = 7, 11
     box = Box(0, 0, width, height)
     # test getters
@@ -138,8 +127,7 @@ def test_box_properties():
     assert box.ratio == width / height
 
 
-def test_box_operators():
-
+def test_boxoperators():
     # eq
     assert Box(0, 1, 2, 3) == Box(0, 1, 2, 3)
     assert Box(0, 1, 2, 3) != Box(0, 0, 2, 3)
@@ -163,7 +151,7 @@ def test_box_operators():
     assert Box(0, 0, 1, 1) & Box(0, 2, 1, 3) == Box(0, 0, 0, 0)
 
 
-def test_box_methods():
+def test_boxmethods():
     box = Box(0, 1, 2, 3)
     # __dict__
     assert box.__dict__ == dict(left=0, top=1, right=2, bottom=3)
@@ -177,7 +165,7 @@ def test_box_methods():
     assert box == eval(box.__repr__())
 
 
-def test_box_exceptions():
+def test_boxexceptions():
 
     with pytest.raises(ValueError):
         Box(0, 1, 1, 0)

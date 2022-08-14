@@ -61,10 +61,10 @@ def show_features(image: Img, features: list, preview=False):
     return reactjs.render(image, features, preview)
 
 
-def detect_and_show(image: Img, det: FeatureDetector, preview=False):
+def feature_detect_and_show(image: Img, det: FeatureDetector, preview=False):
 
     if isinstance(image, list):
-        html = ''.join(detect_and_show(im, det, preview).data for im in image)
+        html = ''.join(feature_detect_and_show(im, det, preview).data for im in image)
         return IPython.display.HTML(html)
     features = det.detect_features(image)
     return reactjs.render(image, features, preview)
@@ -81,12 +81,6 @@ def cv_img_src(cvimg: numpy.ndarray, width: int) -> str:
 
 
 def opencv_image(fn: str, size: typing.Optional[int] = None) -> numpy.ndarray:
-    """Read image file to grayscale openCV int array.
-
-    The OpenCV algorithms works on a two dimensional
-    numpy array integers where 0 is black and 255 is
-    white. Color images will be converted to grayscale.
-    """
     cv_image = cv2.imread(fn)
     if size:
         dims = cv_image.shape[1::-1]
@@ -98,7 +92,7 @@ def opencv_image(fn: str, size: typing.Optional[int] = None) -> numpy.ndarray:
 
 @pytest.fixture
 def fixture_image():
-    imagefile = Path(__file__).parent / 'fixtureimage.jpg'
+    imagefile = Path(__file__).parent / 'fimg.jpg'
     assert imagefile.exists()
     return str(imagefile)
 

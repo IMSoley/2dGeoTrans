@@ -40,7 +40,6 @@ const tagHeaders = (html) => {
   return $.html()
 }
 
-/* eslint-disable no-console */
 const highlight = (code, language) => {
   if ((language !== null) && hljs.getLanguage(language)) {
     try {
@@ -58,7 +57,6 @@ const highlight = (code, language) => {
 }
 
 const trimIndentation = (raw) => {
-  /* trim blank lines and leading indentation from source */
   const lines = raw.split('\n')
   let indentation = ''
 

@@ -23,7 +23,7 @@ def img_element(src, width: int=100, title='img') -> str:
         title, style, src, width)
 
 
-def show_tryner(n=200):
+def show_trner(n=200):
     portrait_detector = FaceDetector(n=1, imagesize=200)
     portrait_detector._cascades = portrait_detector._cascades[:2]
     doc = ''
