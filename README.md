@@ -79,20 +79,20 @@
     ```python
     class HybridDetector(FeatureDetector):
 
-    BREAKPOINT = 0.15
+        BREAKPOINT = 0.15
 
-    def __init__(self, n=10) -> None:
-        self.primary = FaceDetector(n, padding=1.5)
-        self.fallback = KeypointDetector(n, padding=1.2)
-        self.breakpoint = self.BREAKPOINT
-        self._number = n
+        def __init__(self, n=10) -> None:
+            self.primary = FaceDetector(n, padding=1.5)
+            self.fallback = KeypointDetector(n, padding=1.2)
+            self.breakpoint = self.BREAKPOINT
+            self._number = n
 
-    def detect_features(self, fn: FileName) -> List[Feature]:
-        faces = self.primary.detect_features(fn)
-        if faces and sum(faces).size > self.breakpoint:
-            return faces
-        features = faces + self.fallback.detect_features(fn)
-        return features[:self._number]
+        def detect_features(self, fn: FileName) -> List[Feature]:
+            faces = self.primary.detect_features(fn)
+            if faces and sum(faces).size > self.breakpoint:
+                return faces
+            features = faces + self.fallback.detect_features(fn)
+            return features[:self._number]
     ```
 
     ```python
